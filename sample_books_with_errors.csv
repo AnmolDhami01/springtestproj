@@ -1,0 +1,16 @@
+book_name,price,author_name
+The Great Gatsby,25.99,John Doe
+To Kill a Mockingbird,19.99,Jane Smith
+1984,15.50,John Doe
+Pride and Prejudice,22.75,Jane Smith
+The Catcher in the Rye,18.25,John Doe
+Lord of the Flies,16.80,Jane Smith
+Animal Farm,12.99,John Doe
+The Hobbit,29.99,Jane Smith
+Brave New World,21.45,John Doe
+Fahrenheit 451,17.30,Jane Smith
+Invalid Book,,Unknown Author
+Another Book,abc,John Doe
+Missing Price Book,,Jane Smith
+Duplicate Book,25.99,John Doe
+The Great Gatsby,30.00,John Doe 

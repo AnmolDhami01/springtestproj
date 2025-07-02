@@ -1,0 +1,308 @@
+book_name,price,author_name
+The Great Gatsby,25,Anmol Dhami
+To Kill a Mockingbird,19,Jane Smith
+1984,15,John Doe
+Pride and Prejudice,22,Jane Smith
+The Catcher in the Rye,18,John Doe
+Lord of the Flies,16,Jane Smith
+Animal Farm,12,Anmol Dhami
+The Hobbit,29,Jane Smith
+Brave New World,21,John Doe
+Fahrenheit 451,17,Anmol Dhami
+The Alchemist,24,Paulo Coelho
+The Little Prince,20,Antoine de Saint-Exupéry
+The Kite Runner,23,Khaled Hosseini
+Life of Pi,26,Yann Martel
+The Book Thief,27,Markus Zusak
+The Fault in Our Stars,28,John Green
+Gone Girl,31,Gillian Flynn
+The Girl on the Train,30,Paula Hawkins
+Big Little Lies,32,Liane Moriarty
+The Silent Patient,33,Alex Michaelides
+Educated,34,Tara Westover
+Becoming,35,Michelle Obama
+Sapiens,36,Yuval Noah Harari
+Atomic Habits,37,James Clear
+The Subtle Art of Not Giving a F*ck,38,Mark Manson
+Rich Dad Poor Dad,39,Robert Kiyosaki
+Think and Grow Rich,40,Napoleon Hill
+The Power of Now,41,Eckhart Tolle
+The 7 Habits of Highly Effective People,42,Stephen Covey
+How to Win Friends and Influence People,43,Dale Carnegie
+The Art of War,44,Sun Tzu
+Meditations,45,Marcus Aurelius
+The Republic,46,Plato
+The Prince,47,Niccolò Machiavelli
+Leviathan,48,Thomas Hobbes
+The Social Contract,49,Jean-Jacques Rousseau
+The Wealth of Nations,50,Adam Smith
+Capital,51,Karl Marx
+The Communist Manifesto,52,Karl Marx
+The Origin of Species,53,Charles Darwin
+The Selfish Gene,54,Richard Dawkins
+A Brief History of Time,55,Stephen Hawking
+The Universe in a Nutshell,56,Stephen Hawking
+Cosmos,57,Carl Sagan
+The Demon-Haunted World,58,Carl Sagan
+Contact,59,Carl Sagan
+Foundation,60,Isaac Asimov
+I, Robot,61,Isaac Asimov
+The Foundation Trilogy,62,Isaac Asimov
+Dune,63,Frank Herbert
+Dune Messiah,64,Frank Herbert
+Children of Dune,65,Frank Herbert
+God Emperor of Dune,66,Frank Herbert
+Heretics of Dune,67,Frank Herbert
+Chapterhouse: Dune,68,Frank Herbert
+Neuromancer,69,William Gibson
+Count Zero,70,William Gibson
+Mona Lisa Overdrive,71,William Gibson
+Snow Crash,72,Neal Stephenson
+Cryptonomicon,73,Neal Stephenson
+The Diamond Age,74,Neal Stephenson
+Anathem,75,Neal Stephenson
+Seveneves,76,Neal Stephenson
+The Martian,77,Andy Weir
+Project Hail Mary,78,Andy Weir
+Artemis,79,Andy Weir
+Ready Player One,80,Ernest Cline
+Ready Player Two,81,Ernest Cline
+Armada,82,Ernest Cline
+The Hunger Games,83,Suzanne Collins
+Catching Fire,84,Suzanne Collins
+Mockingjay,85,Suzanne Collins
+The Ballad of Songbirds and Snakes,86,Suzanne Collins
+Divergent,87,Veronica Roth
+Insurgent,88,Veronica Roth
+Allegiant,89,Veronica Roth
+Four,90,Veronica Roth
+The Maze Runner,91,James Dashner
+The Scorch Trials,92,James Dashner
+The Death Cure,93,James Dashner
+The Kill Order,94,James Dashner
+The Fever Code,95,James Dashner
+Twilight,96,Stephenie Meyer
+New Moon,97,Stephenie Meyer
+Eclipse,98,Stephenie Meyer
+Breaking Dawn,99,Stephenie Meyer
+The Host,100,Stephenie Meyer
+The Selection,101,Kiera Cass
+The Elite,102,Kiera Cass
+The One,103,Kiera Cass
+The Heir,104,Kiera Cass
+The Crown,105,Kiera Cass
+The Red Queen,106,Victoria Aveyard
+Glass Sword,107,Victoria Aveyard
+King's Cage,108,Victoria Aveyard
+War Storm,109,Victoria Aveyard
+Broken Throne,110,Victoria Aveyard
+Red Rising,111,Pierce Brown
+Golden Son,112,Pierce Brown
+Morning Star,113,Pierce Brown
+Iron Gold,114,Pierce Brown
+Dark Age,115,Pierce Brown
+Light Bringer,116,Pierce Brown
+Red Rising,117,Pierce Brown
+The Way of Kings,118,Brandon Sanderson
+Words of Radiance,119,Brandon Sanderson
+Oathbringer,120,Brandon Sanderson
+Rhythm of War,121,Brandon Sanderson
+The Final Empire,122,Brandon Sanderson
+The Well of Ascension,123,Brandon Sanderson
+The Hero of Ages,124,Brandon Sanderson
+The Alloy of Law,125,Brandon Sanderson
+Shadows of Self,126,Brandon Sanderson
+The Bands of Mourning,127,Brandon Sanderson
+The Lost Metal,128,Brandon Sanderson
+Elantris,129,Brandon Sanderson
+Warbreaker,130,Brandon Sanderson
+The Rithmatist,131,Brandon Sanderson
+Steelheart,132,Brandon Sanderson
+Firefight,133,Brandon Sanderson
+Calamity,134,Brandon Sanderson
+Skyward,135,Brandon Sanderson
+Starsight,136,Brandon Sanderson
+Cytonic,137,Brandon Sanderson
+Defiant,138,Brandon Sanderson
+The Name of the Wind,139,Patrick Rothfuss
+The Wise Man's Fear,140,Patrick Rothfuss
+The Slow Regard of Silent Things,141,Patrick Rothfuss
+The Lightning Tree,142,Patrick Rothfuss
+How Old Holly Came To Be,143,Patrick Rothfuss
+The Narrow Road Between Desires,144,Patrick Rothfuss
+A Game of Thrones,145,George R.R. Martin
+A Clash of Kings,146,George R.R. Martin
+A Storm of Swords,147,George R.R. Martin
+A Feast for Crows,148,George R.R. Martin
+A Dance with Dragons,149,George R.R. Martin
+The Winds of Winter,150,George R.R. Martin
+A Dream of Spring,151,George R.R. Martin
+Fire & Blood,152,George R.R. Martin
+The World of Ice & Fire,153,George R.R. Martin
+Knight of the Seven Kingdoms,154,George R.R. Martin
+The Lord of the Rings,155,J.R.R. Tolkien
+The Fellowship of the Ring,156,J.R.R. Tolkien
+The Two Towers,157,J.R.R. Tolkien
+The Return of the King,158,J.R.R. Tolkien
+The Silmarillion,159,J.R.R. Tolkien
+The Children of Húrin,160,J.R.R. Tolkien
+Beren and Lúthien,161,J.R.R. Tolkien
+The Fall of Gondolin,162,J.R.R. Tolkien
+Unfinished Tales,163,J.R.R. Tolkien
+The History of Middle-earth,164,J.R.R. Tolkien
+The Book of Lost Tales,165,J.R.R. Tolkien
+The Lays of Beleriand,166,J.R.R. Tolkien
+The Shaping of Middle-earth,167,J.R.R. Tolkien
+The Lost Road and Other Writings,168,J.R.R. Tolkien
+The Return of the Shadow,169,J.R.R. Tolkien
+The Treason of Isengard,170,J.R.R. Tolkien
+The War of the Ring,171,J.R.R. Tolkien
+Sauron Defeated,172,J.R.R. Tolkien
+Morgoth's Ring,173,J.R.R. Tolkien
+The War of the Jewels,174,J.R.R. Tolkien
+The Peoples of Middle-earth,175,J.R.R. Tolkien
+The Hobbit,176,J.R.R. Tolkien
+Farmer Giles of Ham,177,J.R.R. Tolkien
+Smith of Wootton Major,178,J.R.R. Tolkien
+Leaf by Niggle,179,J.R.R. Tolkien
+The Adventures of Tom Bombadil,180,J.R.R. Tolkien
+The Road Goes Ever On,181,J.R.R. Tolkien
+Bilbo's Last Song,182,J.R.R. Tolkien
+The Father Christmas Letters,183,J.R.R. Tolkien
+Roverandom,184,J.R.R. Tolkien
+Mr. Bliss,185,J.R.R. Tolkien
+The Legend of Sigurd and Gudrún,186,J.R.R. Tolkien
+The Fall of Arthur,187,J.R.R. Tolkien
+Beowulf,188,J.R.R. Tolkien
+The Story of Kullervo,189,J.R.R. Tolkien
+The Lay of Aotrou and Itroun,190,J.R.R. Tolkien
+The Battle of Maldon,191,J.R.R. Tolkien
+The Homecoming of Beorhtnoth,192,J.R.R. Tolkien
+The Notion Club Papers,193,J.R.R. Tolkien
+The Drowning of Anadûnê,194,J.R.R. Tolkien
+The New Shadow,195,J.R.R. Tolkien
+Tal-Elmar,196,J.R.R. Tolkien
+The Marring of Vëa,197,J.R.R. Tolkien
+The Tale of Years,198,J.R.R. Tolkien
+The Annals of Aman,199,J.R.R. Tolkien
+The Grey Annals,200,J.R.R. Tolkien
+The Later Quenta Silmarillion,201,J.R.R. Tolkien
+The Later Annals of Beleriand,202,J.R.R. Tolkien
+The Annals of Valinor,203,J.R.R. Tolkien
+The Annals of Beleriand,204,J.R.R. Tolkien
+The Quenta,205,J.R.R. Tolkien
+The Quenta Noldorinwa,206,J.R.R. Tolkien
+The Sketch of the Mythology,207,J.R.R. Tolkien
+The Earliest Annals of Valinor,208,J.R.R. Tolkien
+The Earliest Annals of Beleriand,209,J.R.R. Tolkien
+The Earliest 'Silmarillion',210,J.R.R. Tolkien
+The Earliest Version of the Story of Finwë and Míriel,211,J.R.R. Tolkien
+The Shibboleth of Fëanor,212,J.R.R. Tolkien
+The Problem of Ros,213,J.R.R. Tolkien
+The Rivers and Beacon-hills of Gondor,214,J.R.R. Tolkien
+The Disaster of the Gladden Fields,215,J.R.R. Tolkien
+Cirion and Eorl and the Friendship of Gondor and Rohan,216,J.R.R. Tolkien
+The House of Eorl,217,J.R.R. Tolkien
+The Battles of the Fords of Isen,218,J.R.R. Martin
+The Drúedain,219,J.R.R. Tolkien
+The Istari,220,J.R.R. Tolkien
+The Palantíri,221,J.R.R. Tolkien
+The Dwarves,222,J.R.R. Tolkien
+The Ents,223,J.R.R. Tolkien
+The Eagles,224,J.R.R. Tolkien
+The Dragons,225,J.R.R. Tolkien
+The Balrogs,226,J.R.R. Tolkien
+The Orcs,227,J.R.R. Tolkien
+The Trolls,228,J.R.R. Tolkien
+The Wargs,229,J.R.R. Tolkien
+The Spiders,230,J.R.R. Tolkien
+The Watchers,231,J.R.R. Tolkien
+The Barrow-wights,232,J.R.R. Tolkien
+The Dead Men of Dunharrow,233,J.R.R. Tolkien
+The Army of the Dead,234,J.R.R. Tolkien
+The Oathbreakers,235,J.R.R. Tolkien
+The Paths of the Dead,236,J.R.R. Tolkien
+The Dead Marshes,237,J.R.R. Tolkien
+The Morgul Vale,238,J.R.R. Tolkien
+The Black Gate,239,J.R.R. Tolkien
+The Tower of Cirith Ungol,240,J.R.R. Tolkien
+The Tower of Orthanc,241,J.R.R. Tolkien
+The Tower of Barad-dûr,242,J.R.R. Tolkien
+The Tower of Ecthelion,243,J.R.R. Tolkien
+The Tower of the Moon,244,J.R.R. Tolkien
+The Tower of the Sun,245,J.R.R. Tolkien
+The Tower of the Stars,246,J.R.R. Tolkien
+The Tower of the Winds,247,J.R.R. Tolkien
+The Tower of the Clouds,248,J.R.R. Tolkien
+The Tower of the Mist,249,J.R.R. Tolkien
+The Tower of the Rain,250,J.R.R. Tolkien
+The Tower of the Snow,251,J.R.R. Tolkien
+The Tower of the Ice,252,J.R.R. Tolkien
+The Tower of the Fire,253,J.R.R. Tolkien
+The Tower of the Earth,254,J.R.R. Tolkien
+The Tower of the Water,255,J.R.R. Tolkien
+The Tower of the Air,256,J.R.R. Tolkien
+The Tower of the Light,257,J.R.R. Tolkien
+The Tower of the Dark,258,J.R.R. Tolkien
+The Tower of the Shadow,259,J.R.R. Tolkien
+The Tower of the Flame,260,J.R.R. Tolkien
+The Tower of the Frost,261,J.R.R. Tolkien
+The Tower of the Storm,262,J.R.R. Tolkien
+The Tower of the Thunder,263,J.R.R. Tolkien
+The Tower of the Lightning,264,J.R.R. Tolkien
+The Tower of the Rainbow,265,J.R.R. Tolkien
+The Tower of the Aurora,266,J.R.R. Tolkien
+The Tower of the Comet,267,J.R.R. Tolkien
+The Tower of the Meteor,268,J.R.R. Tolkien
+The Tower of the Asteroid,269,J.R.R. Tolkien
+The Tower of the Planet,270,J.R.R. Tolkien
+The Tower of the Star,271,J.R.R. Tolkien
+The Tower of the Galaxy,272,J.R.R. Tolkien
+The Tower of the Universe,273,J.R.R. Tolkien
+The Tower of the Cosmos,274,J.R.R. Tolkien
+The Tower of the Void,275,J.R.R. Tolkien
+The Tower of the Abyss,276,J.R.R. Tolkien
+The Tower of the Chasm,277,J.R.R. Tolkien
+The Tower of the Canyon,278,J.R.R. Tolkien
+The Tower of the Valley,279,J.R.R. Tolkien
+The Tower of the Mountain,280,J.R.R. Tolkien
+The Tower of the Hill,281,J.R.R. Tolkien
+The Tower of the Peak,282,J.R.R. Tolkien
+The Tower of the Summit,283,J.R.R. Tolkien
+The Tower of the Crest,284,J.R.R. Tolkien
+The Tower of the Ridge,285,J.R.R. Tolkien
+The Tower of the Spur,286,J.R.R. Tolkien
+The Tower of the Pass,287,J.R.R. Tolkien
+The Tower of the Gap,288,J.R.R. Tolkien
+The Tower of the Gate,289,J.R.R. Tolkien
+The Tower of the Door,290,J.R.R. Tolkien
+The Tower of the Window,291,J.R.R. Tolkien
+The Tower of the Portal,292,J.R.R. Tolkien
+The Tower of the Arch,293,J.R.R. Tolkien
+The Tower of the Bridge,294,J.R.R. Tolkien
+The Tower of the Road,295,J.R.R. Tolkien
+The Tower of the Path,296,J.R.R. Tolkien
+The Tower of the Way,297,J.R.R. Tolkien
+The Tower of the Street,298,J.R.R. Tolkien
+The Tower of the Avenue,299,J.R.R. Tolkien
+The Tower of the Boulevard,300,J.R.R. Tolkien
+The Tower of the Highway,301,J.R.R. Tolkien
+The Tower of the Freeway,302,J.R.R. Tolkien
+The Tower of the Expressway,303,J.R.R. Tolkien
+The Tower of the Parkway,304,J.R.R. Tolkien
+The Tower of the Drive,305,J.R.R. Tolkien
+The Tower of the Lane,306,J.R.R. Tolkien
+The Tower of the Alley,307,J.R.R. Tolkien
+The Tower of the Court,308,J.R.R. Tolkien
+The Tower of the Place,309,J.R.R. Tolkien
+The Tower of the Square,310,J.R.R. Tolkien
+The Tower of the Circle,311,J.R.R. Tolkien
+The Tower of the Oval,312,J.R.R. Tolkien
+The Tower of the Triangle,313,J.R.R. Tolkien
+The Tower of the Diamond,314,J.R.R. Tolkien
+The Tower of the Pentagon,315,J.R.R. Tolkien
+The Tower of the Hexagon,316,J.R.R. Tolkien
+The Tower of the Octagon,317,J.R.R. Tolkien
+The Tower of the Decagon,318,J.R.R. Tolkien
+The Tower of the Dodecagon,319,J.R.R. Tolkien
+The Tower of the Polygon,320,J.R.R. Tolkien

@@ -15,7 +15,9 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
+import java.nio.file.Paths;
 
 @Component
 public class Utils {
@@ -26,6 +28,8 @@ public class Utils {
     private UsersRepo usersRepo;
     @Autowired
     private BulkErrorRepo bulkErrorRepo;
+
+    private final String BASE_UPLOAD_DIR = "uploads";
 
     @Async("taskExecutor")
     public void addBookBulkCsv(MultipartFile file) {
@@ -131,6 +135,33 @@ public class Utils {
 
         }
 
+    }
+
+    public void saveUserImage(MultipartFile file, Long userId) {
+
+        try {
+            if (file.isEmpty()) {
+                return;
+            }
+
+            // Define user-specific directory
+            String userDirPath = Paths.get(BASE_UPLOAD_DIR, userId.toString()).toString();
+            File userDir = new File(userDirPath);
+
+            // Create directory if it doesn't exist
+            if (!userDir.exists()) {
+                userDir.mkdirs();
+            }
+
+            // Full path to save the file
+            String filePath = userDirPath + File.separator + file.getOriginalFilename();
+
+            // Save the file
+            file.transferTo(new File(filePath));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -14,4 +14,8 @@ public interface BooksService {
     ResponseWrapper addBookBulk(List<CreateBook> createBook);
 
     CompletableFuture<ResponseWrapper> addBookBulkCsv(MultipartFile file);
+
+    CompletableFuture<ResponseWrapper> addBookFile(MultipartFile file, Long bookId);
+
+    byte[] getBookFile(Long bookId);
 }

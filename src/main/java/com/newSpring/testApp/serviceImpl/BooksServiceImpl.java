@@ -10,8 +10,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.scheduling.annotation.Async;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -31,6 +38,10 @@ public class BooksServiceImpl implements BooksService {
     private UsersRepo usersRepo;
     @Autowired
     private Utils utils;
+
+    private static final String BASE_UPLOAD_DIR = "src/main/resources/static/uploads";
+
+    private static final List<String> ALLOWED_EXTENSIONS = Arrays.asList("pdf", "jpg", "jpeg", "png");
 
     @Override
     public ResponseWrapper addBook(CreateBook createBook) {
@@ -158,7 +169,6 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
-    @Async
     public CompletableFuture<ResponseWrapper> addBookBulkCsv(MultipartFile file) {
         StatusDescription statusDescription = new StatusDescription();
         ResponseWrapper responseWrapper = new ResponseWrapper(statusDescription, null);
@@ -194,6 +204,102 @@ public class BooksServiceImpl implements BooksService {
             responseWrapper.setStatusDescriptions(statusDescription);
         } finally {
             return CompletableFuture.completedFuture(responseWrapper);
+        }
+    }
+
+    @Override
+    public CompletableFuture<ResponseWrapper> addBookFile(MultipartFile file, Long bookId) {
+        StatusDescription statusDescription = new StatusDescription();
+        ResponseWrapper responseWrapper = new ResponseWrapper(statusDescription, null);
+
+        try {
+            if (file == null || file.isEmpty() || bookId == null || bookId == 0) {
+                statusDescription.setStatusCode(400);
+                statusDescription.setStatusDescription("Bad Request");
+                responseWrapper.setStatusDescriptions(statusDescription);
+                return CompletableFuture.completedFuture(responseWrapper);
+            }
+
+            // Check file name and extension
+            String originalFilename = file.getOriginalFilename();
+            if (originalFilename == null || originalFilename.trim().isEmpty()) {
+                statusDescription.setStatusCode(400);
+                statusDescription.setStatusDescription("File name is missing.");
+                responseWrapper.setStatusDescriptions(statusDescription);
+                return CompletableFuture.completedFuture(responseWrapper);
+            }
+
+            String extension = originalFilename.split("\\.")[originalFilename.split("\\.").length - 1].toLowerCase();
+
+            if (!ALLOWED_EXTENSIONS.contains(extension)) {
+                statusDescription.setStatusCode(400);
+                statusDescription
+                        .setStatusDescription("Invalid file type. Allowed: " + String.join(", ", ALLOWED_EXTENSIONS));
+                responseWrapper.setStatusDescriptions(statusDescription);
+                return CompletableFuture.completedFuture(responseWrapper);
+            }
+
+            long maxSizeInBytes = 5 * 1024 * 1024;
+            if (file.getSize() > maxSizeInBytes) {
+                statusDescription.setStatusCode(400);
+                statusDescription.setStatusDescription("File is too large. Max size: 5 MB.");
+                responseWrapper.setStatusDescriptions(statusDescription);
+                return CompletableFuture.completedFuture(responseWrapper);
+            }
+
+            BookModal book = booksRepo.findById(bookId).orElse(null);
+            if (book == null) {
+                statusDescription.setStatusCode(400);
+                statusDescription.setStatusDescription("Book not found");
+                responseWrapper.setStatusDescriptions(statusDescription);
+                return CompletableFuture.completedFuture(responseWrapper);
+            }
+
+            Path bookFolder = Paths.get(BASE_UPLOAD_DIR, bookId.toString());
+            Files.createDirectories(bookFolder);
+
+            String fileName = (book.getName() + "_" + new java.util.Date().toString()
+                    + "." + extension).replace(" ", "_").replace(":", "-");
+
+            Path filePath = bookFolder.resolve(fileName);
+
+            Files.write(filePath, file.getBytes(), StandardOpenOption.CREATE);
+
+            book.setFileName(fileName);
+            book.setFilePath(filePath.toString());
+            booksRepo.save(book);
+
+            statusDescription.setStatusCode(200);
+            statusDescription.setStatusDescription("File uploaded successfully to: " + filePath.toString());
+            responseWrapper.setStatusDescriptions(statusDescription);
+            return CompletableFuture.completedFuture(responseWrapper);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            statusDescription.setStatusCode(500);
+            statusDescription.setStatusDescription("Internal Server Error: " + e.getMessage());
+            responseWrapper.setStatusDescriptions(statusDescription);
+        } finally {
+            return CompletableFuture.completedFuture(responseWrapper);
+        }
+    }
+
+    @Override
+    public byte[] getBookFile(Long bookId) {
+        try {
+            BookModal book = booksRepo.findById(bookId).orElse(null);
+            if (book == null || book.getFilePath() == null) {
+                throw new RuntimeException("Book not found or no file attached");
+            }
+
+            Path filePath = Paths.get(book.getFilePath());
+            if (!Files.exists(filePath)) {
+                throw new RuntimeException("File not found on disk");
+            }
+
+            return Files.readAllBytes(filePath);
+        } catch (Exception e) {
+            throw new RuntimeException("Error reading file: " + e.getMessage());
         }
     }
 }

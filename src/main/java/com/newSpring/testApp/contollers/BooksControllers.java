@@ -17,6 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("books/")
@@ -88,5 +92,42 @@ public class BooksControllers {
         }
 
         return new ResponseEntity<>(responseWrapper, HttpStatus.OK);
+    }
+
+    @PostMapping("v1/addBookFile")
+    public ResponseEntity<ResponseWrapper> addBookFile(@RequestParam("file") MultipartFile file,
+            @RequestParam("bookId") Long bookId) {
+        ResponseWrapper responseWrapper = new ResponseWrapper();
+        StatusDescription statusDescription = new StatusDescription();
+
+        responseWrapper.setStatusDescriptions(statusDescription);
+
+        try {
+            responseWrapper = this.booksService.addBookFile(file, bookId).get();
+            statusDescription = responseWrapper.getStatusDescriptions();
+            responseWrapper.setStatusDescriptions(statusDescription);
+        } catch (Exception e) {
+            e.printStackTrace();
+            statusDescription.setStatusCode(500);
+            statusDescription.setStatusDescription("Internal Server Error: " + e.getMessage());
+            responseWrapper.setStatusDescriptions(statusDescription);
+        }
+
+        return new ResponseEntity<>(responseWrapper, HttpStatus.OK);
+    }
+
+    @GetMapping("v1/getBookFile/{bookId}")
+    public ResponseEntity<byte[]> getBookFile(@PathVariable Long bookId) {
+        try {
+            byte[] fileBytes = this.booksService.getBookFile(bookId);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", "book_file");
+
+            return new ResponseEntity<>(fileBytes, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.newSpring.testApp.modal.BookModal;
 
-public interface BookRepo extends JpaRepository<BookModal, Integer> {
+public interface BookRepo extends JpaRepository<BookModal, Long> {
     // You can add custom query methods here if needed
     BookModal findByName(String name);
 }

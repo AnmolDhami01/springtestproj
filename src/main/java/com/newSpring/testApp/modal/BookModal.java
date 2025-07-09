@@ -29,7 +29,7 @@ public class BookModal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
     @Column(name = "name")
     private String name;
     @ManyToOne
@@ -44,5 +44,9 @@ public class BookModal {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+    @Column(name = "file_name")
+    private String fileName;
+    @Column(name = "file_path")
+    private String filePath;
 
 }

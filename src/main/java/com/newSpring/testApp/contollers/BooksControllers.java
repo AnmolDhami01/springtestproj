@@ -7,6 +7,7 @@ import com.newSpring.testApp.ResponseEntinty.ResponseWrapper;
 import com.newSpring.testApp.ResponseEntinty.StatusDescription;
 import com.newSpring.testApp.RequestEntity.CreateBook;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,4 +90,28 @@ public class BooksControllers {
 
         return new ResponseEntity<>(responseWrapper, HttpStatus.OK);
     }
+
+    @PostMapping("v1/filterBooks")
+    public ResponseEntity<ResponseWrapper> filterBooks(String name, Long price, Long authorId, LocalDateTime createdAt,
+            LocalDateTime updatedAt) {
+        ResponseWrapper responseWrapper = new ResponseWrapper();
+        StatusDescription statusDescription = new StatusDescription();
+
+        responseWrapper.setStatusDescriptions(statusDescription);
+
+        try {
+
+            responseWrapper = this.booksService.filterBooks(name, price, authorId, createdAt, updatedAt).get();
+            statusDescription = responseWrapper.getStatusDescriptions();
+            responseWrapper.setStatusDescriptions(statusDescription);
+        } catch (Exception e) {
+            e.printStackTrace();
+            statusDescription.setStatusCode(500);
+            statusDescription.setStatusDescription("Internal Server Error: " + e.getMessage());
+            responseWrapper.setStatusDescriptions(statusDescription);
+        }
+
+        return new ResponseEntity<>(responseWrapper, HttpStatus.OK);
+    }
+
 }

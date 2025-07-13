@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Async;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -195,5 +196,17 @@ public class BooksServiceImpl implements BooksService {
         } finally {
             return CompletableFuture.completedFuture(responseWrapper);
         }
+    }
+
+    @Override
+    public ResponseWrapper filterBooks(String name, Long price, Long authorId, LocalDateTime createdAt,
+            LocalDateTime endDate) {
+        StatusDescription statusDescription = new StatusDescription();
+        ResponseWrapper responseWrapper = new ResponseWrapper(statusDescription, null);
+
+        try {
+            List<BookModal> books = booksRepo.findByName(name);
+        } catch (Exception e) {
+            e.printStackTrace();
     }
 }

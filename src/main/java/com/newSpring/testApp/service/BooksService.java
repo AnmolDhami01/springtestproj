@@ -1,5 +1,6 @@
 package com.newSpring.testApp.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -14,4 +15,7 @@ public interface BooksService {
     ResponseWrapper addBookBulk(List<CreateBook> createBook);
 
     CompletableFuture<ResponseWrapper> addBookBulkCsv(MultipartFile file);
+
+    ResponseWrapper filterBooks(String name, Long price, Long authorId, LocalDateTime createdAt,
+            LocalDateTime updatedAt);
 }

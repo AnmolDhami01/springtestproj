@@ -5,7 +5,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.newSpring.testApp.ResponseEntinty.ResponseWrapper;
 import com.newSpring.testApp.ResponseEntinty.StatusDescription;
+import com.newSpring.testApp.modal.BookModal;
+import com.newSpring.testApp.modal.repo.BookRepo;
 import com.newSpring.testApp.RequestEntity.CreateBook;
+import com.newSpring.testApp.RequestEntity.FilterBooksRequest;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,6 +32,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class BooksControllers {
     @Autowired
     private BooksService booksService;
+
+    @Autowired
+    private BookRepo booksRepo;
+
+    @GetMapping("v1/getBooks")
+    public ResponseEntity<ResponseWrapper> getBooks() {
+        ResponseWrapper responseWrapper = new ResponseWrapper();
+        StatusDescription statusDescription = new StatusDescription();
+
+        List<BookModal> books = this.booksRepo.findAll();
+
+        responseWrapper.setBooks(books);
+
+        responseWrapper.setStatusDescriptions(statusDescription);
+
+        return new ResponseEntity<>(responseWrapper, HttpStatus.OK);
+    }
 
     @PostMapping("v1/addBook")
     public ResponseEntity<ResponseWrapper> addBook(@RequestBody CreateBook createBook) {
@@ -96,8 +116,8 @@ public class BooksControllers {
     }
 
     @PostMapping("v1/filterBooks")
-    public ResponseEntity<ResponseWrapper> filterBooks(String name, Long price, Long authorId, LocalDateTime createdAt,
-            LocalDateTime updatedAt) {
+    public ResponseEntity<ResponseWrapper> filterBooks(@RequestBody FilterBooksRequest filterBooksRequest,
+            @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
         ResponseWrapper responseWrapper = new ResponseWrapper();
         StatusDescription statusDescription = new StatusDescription();
 
@@ -105,7 +125,7 @@ public class BooksControllers {
 
         try {
 
-            responseWrapper = this.booksService.filterBooks(name, price, authorId, createdAt, updatedAt).get();
+            responseWrapper = this.booksService.filterBooks(filterBooksRequest);
             statusDescription = responseWrapper.getStatusDescriptions();
             responseWrapper.setStatusDescriptions(statusDescription);
         } catch (Exception e) {

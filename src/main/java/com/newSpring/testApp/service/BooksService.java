@@ -7,6 +7,7 @@ import java.util.concurrent.CompletableFuture;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.newSpring.testApp.RequestEntity.CreateBook;
+import com.newSpring.testApp.RequestEntity.FilterBooksRequest;
 import com.newSpring.testApp.ResponseEntinty.ResponseWrapper;
 
 public interface BooksService {
@@ -16,6 +17,9 @@ public interface BooksService {
 
     CompletableFuture<ResponseWrapper> addBookBulkCsv(MultipartFile file);
 
-    ResponseWrapper filterBooks(String name, Long price, Long authorId, LocalDateTime createdAt,
-            LocalDateTime updatedAt);
+    CompletableFuture<ResponseWrapper> addBookFile(MultipartFile file, Long bookId);
+
+    ResponseWrapper filterBooks(FilterBooksRequest filterBooksRequest);
+
+    byte[] getBookFile(Long bookId);
 }

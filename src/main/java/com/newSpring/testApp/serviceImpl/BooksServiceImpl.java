@@ -1,9 +1,12 @@
 package com.newSpring.testApp.serviceImpl;
 
 import com.newSpring.testApp.RequestEntity.CreateBook;
+import com.newSpring.testApp.RequestEntity.FilterBooksRequest;
 import com.newSpring.testApp.ResponseEntinty.ResponseWrapper;
 import com.newSpring.testApp.service.BooksService;
 import com.newSpring.testApp.utils.Utils;
+
+import jakarta.persistence.EntityManager;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,17 +14,25 @@ import org.springframework.scheduling.annotation.Async;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;<<<<<<<HEAD
-import java.time.LocalDateTime;=======
+import java.io.InputStreamReader;
+import java.time.LocalDateTime;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.sql.Date;>>>>>>>10592 b63a0c471944e15dfd751d70ee770bb33c2
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.Map;
+
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+import jakarta.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import com.newSpring.testApp.modal.repo.BookRepo;
@@ -43,6 +54,9 @@ public class BooksServiceImpl implements BooksService {
     private static final String BASE_UPLOAD_DIR = "src/main/resources/static/uploads";
 
     private static final List<String> ALLOWED_EXTENSIONS = Arrays.asList("pdf", "jpg", "jpeg", "png");
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Override
     public ResponseWrapper addBook(CreateBook createBook) {
@@ -209,14 +223,175 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
-    public ResponseWrapper filterBooks(String name, Long price, Long authorId, LocalDateTime createdAt,
-            LocalDateTime endDate) {
+    public ResponseWrapper filterBooks(FilterBooksRequest filterBooksRequest) {
         StatusDescription statusDescription = new StatusDescription();
         ResponseWrapper responseWrapper = new ResponseWrapper(statusDescription, null);
 
         try {
-            List<BookModal> books = booksRepo.findByName(name);
+            Pageable pageable = PageRequest.of(filterBooksRequest.getPageNo(), filterBooksRequest.getPageSize());
+            PageImpl<BookModal> booksPage = filterBooksNative(filterBooksRequest.getName(),
+                    filterBooksRequest.getPrice(),
+                    filterBooksRequest.getAuthorId(), filterBooksRequest.getCreatedAt(),
+                    filterBooksRequest.getUpdatedAt(), pageable);
+
+            statusDescription.setStatusCode(200);
+            statusDescription.setStatusDescription("Books filtered successfully");
+            responseWrapper.setStatusDescriptions(statusDescription);
+            responseWrapper.setBooksPage(booksPage);
+            return responseWrapper;
         } catch (Exception e) {
             e.printStackTrace();
+            statusDescription.setStatusCode(500);
+            statusDescription.setStatusDescription("Internal Server Error: " + e.getMessage());
+            responseWrapper.setStatusDescriptions(statusDescription);
+        } finally {
+            return responseWrapper;
+        }
+    }
+
+    @Override
+    public CompletableFuture<ResponseWrapper> addBookFile(MultipartFile file, Long bookId) {
+        StatusDescription statusDescription = new StatusDescription();
+        ResponseWrapper responseWrapper = new ResponseWrapper(statusDescription, null);
+
+        try {
+            if (file == null || file.isEmpty() || bookId == null || bookId == 0) {
+                statusDescription.setStatusCode(400);
+                statusDescription.setStatusDescription("Bad Request");
+                responseWrapper.setStatusDescriptions(statusDescription);
+                return CompletableFuture.completedFuture(responseWrapper);
+            }
+
+            // Check file name and extension
+            String originalFilename = file.getOriginalFilename();
+            if (originalFilename == null || originalFilename.trim().isEmpty()) {
+                statusDescription.setStatusCode(400);
+                statusDescription.setStatusDescription("File name is missing.");
+                responseWrapper.setStatusDescriptions(statusDescription);
+                return CompletableFuture.completedFuture(responseWrapper);
+            }
+
+            String extension = originalFilename.split("\\.")[originalFilename.split("\\.").length - 1].toLowerCase();
+
+            if (!ALLOWED_EXTENSIONS.contains(extension)) {
+                statusDescription.setStatusCode(400);
+                statusDescription
+                        .setStatusDescription("Invalid file type. Allowed: " + String.join(", ", ALLOWED_EXTENSIONS));
+                responseWrapper.setStatusDescriptions(statusDescription);
+                return CompletableFuture.completedFuture(responseWrapper);
+            }
+
+            long maxSizeInBytes = 5 * 1024 * 1024;
+            if (file.getSize() > maxSizeInBytes) {
+                statusDescription.setStatusCode(400);
+                statusDescription.setStatusDescription("File is too large. Max size: 5 MB.");
+                responseWrapper.setStatusDescriptions(statusDescription);
+                return CompletableFuture.completedFuture(responseWrapper);
+            }
+
+            BookModal book = booksRepo.findById(bookId).orElse(null);
+            if (book == null) {
+                statusDescription.setStatusCode(400);
+                statusDescription.setStatusDescription("Book not found");
+                responseWrapper.setStatusDescriptions(statusDescription);
+                return CompletableFuture.completedFuture(responseWrapper);
+            }
+
+            Path bookFolder = Paths.get(BASE_UPLOAD_DIR, bookId.toString());
+            Files.createDirectories(bookFolder);
+
+            String fileName = (book.getName() + "_" + new java.util.Date().toString()
+                    + "." + extension).replace(" ", "_").replace(":", "-");
+
+            Path filePath = bookFolder.resolve(fileName);
+
+            Files.write(filePath, file.getBytes(), StandardOpenOption.CREATE);
+
+            book.setFileName(fileName);
+            book.setFilePath(filePath.toString());
+            booksRepo.save(book);
+
+            statusDescription.setStatusCode(200);
+            statusDescription.setStatusDescription("File uploaded successfully to: " + filePath.toString());
+            responseWrapper.setStatusDescriptions(statusDescription);
+            return CompletableFuture.completedFuture(responseWrapper);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            statusDescription.setStatusCode(500);
+            statusDescription.setStatusDescription("Internal Server Error: " + e.getMessage());
+            responseWrapper.setStatusDescriptions(statusDescription);
+        } finally {
+            return CompletableFuture.completedFuture(responseWrapper);
+        }
+    }
+
+    @Override
+    public byte[] getBookFile(Long bookId) {
+        try {
+            BookModal book = booksRepo.findById(bookId).orElse(null);
+            if (book == null || book.getFilePath() == null) {
+                throw new RuntimeException("Book not found or no file attached");
+            }
+
+            Path filePath = Paths.get(book.getFilePath());
+            if (!Files.exists(filePath)) {
+                throw new RuntimeException("File not found on disk");
+            }
+
+            return Files.readAllBytes(filePath);
+        } catch (Exception e) {
+            throw new RuntimeException("Error reading file: " + e.getMessage());
+        }
+    }
+
+    public PageImpl<BookModal> filterBooksNative(String name, Long price, Long authorId, LocalDateTime createdAt,
+            LocalDateTime updatedAt, Pageable pageable) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM books WHERE 1=1 ");
+        Map<String, Object> params = new HashMap<>();
+
+        // Define conditions and values
+        List<FilterCondition> filters = List.of(
+                new FilterCondition("LOWER(name) LIKE :name", name != null && !name.isBlank(), "name",
+                        name != null ? "%" + name.toLowerCase() + "%" : null),
+                new FilterCondition("price = :price", price != null, "price", price),
+                new FilterCondition("author_id = :authorId", authorId != null, "authorId", authorId),
+                new FilterCondition("Date(created_at) = :createdAt", createdAt != null, "createdAt", createdAt),
+                new FilterCondition("Date(created_at) = :updatedAt", updatedAt != null, "updatedAt", updatedAt));
+
+        // Build query
+        for (FilterCondition filter : filters) {
+            if (filter.shouldApply) {
+                sql.append("AND ").append(filter.sqlSnippet).append(" ");
+                params.put(filter.paramName, filter.paramValue);
+            }
+        }
+
+        // Add pagination at the end
+        if (pageable != null) {
+            sql.append(" LIMIT :limit OFFSET :offset");
+            params.put("limit", pageable.getPageSize());
+            params.put("offset", pageable.getOffset());
+        }
+
+        Query query = entityManager.createNativeQuery(sql.toString(), BookModal.class);
+        params.forEach(query::setParameter);
+
+        return new PageImpl<BookModal>(query.getResultList(), pageable, query.getResultList().size());
+    }
+
+    // Helper class for condition abstraction
+    static class FilterCondition {
+        String sqlSnippet;
+        boolean shouldApply;
+        String paramName;
+        Object paramValue;
+
+        FilterCondition(String sqlSnippet, boolean shouldApply, String paramName, Object paramValue) {
+            this.sqlSnippet = sqlSnippet;
+            this.shouldApply = shouldApply;
+            this.paramName = paramName;
+            this.paramValue = paramValue;
+        }
     }
 }

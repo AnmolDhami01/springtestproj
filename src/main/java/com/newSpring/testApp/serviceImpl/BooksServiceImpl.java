@@ -10,9 +10,16 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.scheduling.annotation.Async;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.time.LocalDateTime;
+import java.io.IOException;
+import java.io.InputStreamReader;<<<<<<<HEAD
+import java.time.LocalDateTime;=======
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.sql.Date;>>>>>>>10592 b63a0c471944e15dfd751d70ee770bb33c2
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -32,6 +39,10 @@ public class BooksServiceImpl implements BooksService {
     private UsersRepo usersRepo;
     @Autowired
     private Utils utils;
+
+    private static final String BASE_UPLOAD_DIR = "src/main/resources/static/uploads";
+
+    private static final List<String> ALLOWED_EXTENSIONS = Arrays.asList("pdf", "jpg", "jpeg", "png");
 
     @Override
     public ResponseWrapper addBook(CreateBook createBook) {
@@ -159,7 +170,6 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
-    @Async
     public CompletableFuture<ResponseWrapper> addBookBulkCsv(MultipartFile file) {
         StatusDescription statusDescription = new StatusDescription();
         ResponseWrapper responseWrapper = new ResponseWrapper(statusDescription, null);

@@ -11,20 +11,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    // @ExceptionHandler(HttpMessageNotReadableException.class)
-    // public ResponseEntity<ResponseWrapper>
-    // handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-    // ResponseWrapper responseWrapper = new ResponseWrapper();
-    // StatusDescription statusDescription = new StatusDescription();
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ResponseWrapper> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        ResponseWrapper responseWrapper = new ResponseWrapper();
+        StatusDescription statusDescription = new StatusDescription();
 
-    // statusDescription.setStatusCode(400);
-    // statusDescription.setStatusDescription(
-    // "Invalid JSON format.");
+        statusDescription.setStatusCode(400);
+        statusDescription.setStatusDescription(
+                "Invalid JSON format.");
 
-    // responseWrapper.setStatusDescriptions(statusDescription);
+        responseWrapper.setStatusDescriptions(statusDescription);
 
-    // return new ResponseEntity<>(responseWrapper, HttpStatus.BAD_REQUEST);
-    // }
+        return new ResponseEntity<>(responseWrapper, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseWrapper> handleGenericException(Exception ex) {

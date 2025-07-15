@@ -27,7 +27,9 @@ public class UserServiceImpl implements UserService {
             StatusDescription statusDescription = new StatusDescription(200, "Success");
             List<UserModal> users = usersRepo.findAll();
 
-            ResponseWrapper responseWrapper = new ResponseWrapper(statusDescription, users);
+            ResponseWrapper responseWrapper = new ResponseWrapper();
+            responseWrapper.setStatusDescriptions(statusDescription);
+            responseWrapper.setUsers(users);
             return responseWrapper;
         } catch (Exception e) {
             throw new RuntimeException("Error fetching users", e);
@@ -37,7 +39,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseWrapper addUser(UserModal userModal) {
         StatusDescription statusDescription = new StatusDescription();
-        ResponseWrapper responseWrapper = new ResponseWrapper(statusDescription, null);
+        ResponseWrapper responseWrapper = new ResponseWrapper();
         try {
             UserModal findUser = usersRepo.findByName(userModal.getName());
             if (findUser != null) {
@@ -52,12 +54,12 @@ public class UserServiceImpl implements UserService {
             statusDescription.setStatusDescription("Success");
             responseWrapper.setStatusDescriptions(statusDescription);
 
+            return responseWrapper;
+
         } catch (Exception e) {
             statusDescription.setStatusCode(500);
             statusDescription.setStatusDescription("Internal Server Error");
             responseWrapper.setStatusDescriptions(statusDescription);
-
-        } finally {
             return responseWrapper;
         }
     }

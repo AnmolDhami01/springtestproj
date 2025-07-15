@@ -29,8 +29,8 @@ public class UserDetailsConfig {
                 // Map your UserModal to Spring Security's UserDetails
                 return User.builder()
                         .username(user.getName())
-                        .password("{noop}") // Use encoder in real app!
-                        .roles("USER") // You can pull roles from user if stored
+                        .password(user.getPassword()) // Use encoder in real app!
+                        .roles(user.getRole()) // You can pull roles from user if stored
                         .build();
             }
         };

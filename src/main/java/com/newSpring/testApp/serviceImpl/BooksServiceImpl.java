@@ -61,7 +61,7 @@ public class BooksServiceImpl implements BooksService {
     @Override
     public ResponseWrapper addBook(CreateBook createBook) {
         StatusDescription statusDescription = new StatusDescription();
-        ResponseWrapper responseWrapper = new ResponseWrapper(statusDescription, null);
+        ResponseWrapper responseWrapper = new ResponseWrapper();
         try {
             if (createBook.getUserId() == null || createBook.getBook() == null || createBook.getBook().getName() == null
                     || createBook.getBook().getPrice() == null) {
@@ -109,7 +109,7 @@ public class BooksServiceImpl implements BooksService {
     @Override
     public ResponseWrapper addBookBulk(List<CreateBook> createBooks) {
         StatusDescription statusDescription = new StatusDescription();
-        ResponseWrapper responseWrapper = new ResponseWrapper(statusDescription, null);
+        ResponseWrapper responseWrapper = new ResponseWrapper();
 
         try {
 
@@ -186,7 +186,7 @@ public class BooksServiceImpl implements BooksService {
     @Override
     public CompletableFuture<ResponseWrapper> addBookBulkCsv(MultipartFile file) {
         StatusDescription statusDescription = new StatusDescription();
-        ResponseWrapper responseWrapper = new ResponseWrapper(statusDescription, null);
+        ResponseWrapper responseWrapper = new ResponseWrapper();
 
         try {
             if (file == null || file.isEmpty()) {
@@ -225,7 +225,7 @@ public class BooksServiceImpl implements BooksService {
     @Override
     public ResponseWrapper filterBooks(FilterBooksRequest filterBooksRequest) {
         StatusDescription statusDescription = new StatusDescription();
-        ResponseWrapper responseWrapper = new ResponseWrapper(statusDescription, null);
+        ResponseWrapper responseWrapper = new ResponseWrapper();
 
         try {
             Pageable pageable = PageRequest.of(filterBooksRequest.getPageNo(), filterBooksRequest.getPageSize());
@@ -252,7 +252,7 @@ public class BooksServiceImpl implements BooksService {
     @Override
     public CompletableFuture<ResponseWrapper> addBookFile(MultipartFile file, Long bookId) {
         StatusDescription statusDescription = new StatusDescription();
-        ResponseWrapper responseWrapper = new ResponseWrapper(statusDescription, null);
+        ResponseWrapper responseWrapper = new ResponseWrapper();
 
         try {
             if (file == null || file.isEmpty() || bookId == null || bookId == 0) {

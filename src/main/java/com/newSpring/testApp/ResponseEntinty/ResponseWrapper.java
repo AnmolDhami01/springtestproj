@@ -9,56 +9,25 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.newSpring.testApp.modal.BookModal;
 import com.newSpring.testApp.modal.UserModal;
 
+import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ResponseWrapper implements Serializable {
 
     StatusDescription statusDescriptions;
 
     List<UserModal> users;
 
+    UserModal user;
+
     List<BookModal> books;
 
     Page<BookModal> booksPage;
-
-    public ResponseWrapper() {
-    }
-
-    public ResponseWrapper(StatusDescription statusDescriptions, List<UserModal> users) {
-        this.statusDescriptions = statusDescriptions;
-        this.users = users;
-    }
-
-    public void setStatusDescriptions(StatusDescription statusDescriptions) {
-        this.statusDescriptions = statusDescriptions;
-    }
-
-    public void setUsers(List<UserModal> users) {
-        this.users = users;
-    }
-
-    public StatusDescription getStatusDescriptions() {
-        return statusDescriptions;
-    }
-
-    public List<UserModal> getUsers() {
-        return users;
-    }
-
-    public void setBooks(List<BookModal> books) {
-        this.books = books;
-    }
-
-    public List<BookModal> getBooks() {
-        return books;
-    }
-
-    public void setBooksPage(Page<BookModal> booksPage) {
-        this.booksPage = booksPage;
-    }
-
-    public Page<BookModal> getBooksPage() {
-        return booksPage;
-    }
 
     @Override
     public String toString() {

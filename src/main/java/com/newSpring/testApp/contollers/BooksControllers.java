@@ -44,6 +44,8 @@ public class BooksControllers {
         List<BookModal> books = this.booksRepo.findAll();
 
         responseWrapper.setBooks(books);
+        statusDescription.setStatusCode(200);
+        statusDescription.setStatusDescription("Books fetched successfully");
 
         responseWrapper.setStatusDescriptions(statusDescription);
 

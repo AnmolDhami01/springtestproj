@@ -5,6 +5,8 @@ import com.newSpring.testApp.ResponseEntinty.StatusDescription;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -23,6 +25,32 @@ public class GlobalExceptionHandler {
         responseWrapper.setStatusDescriptions(statusDescription);
 
         return new ResponseEntity<>(responseWrapper, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ResponseWrapper> handleAccessDeniedException(AccessDeniedException ex) {
+        ResponseWrapper responseWrapper = new ResponseWrapper();
+        StatusDescription statusDescription = new StatusDescription();
+
+        statusDescription.setStatusCode(403);
+        statusDescription.setStatusDescription("Access Denied: You don't have permission to access this resource");
+
+        responseWrapper.setStatusDescriptions(statusDescription);
+
+        return new ResponseEntity<>(responseWrapper, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ResponseWrapper> handleAuthenticationException(AuthenticationException ex) {
+        ResponseWrapper responseWrapper = new ResponseWrapper();
+        StatusDescription statusDescription = new StatusDescription();
+
+        statusDescription.setStatusCode(401);
+        statusDescription.setStatusDescription("Authentication failed: " + ex.getMessage());
+
+        responseWrapper.setStatusDescriptions(statusDescription);
+
+        return new ResponseEntity<>(responseWrapper, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(Exception.class)

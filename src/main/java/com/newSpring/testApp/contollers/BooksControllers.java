@@ -1,6 +1,7 @@
 package com.newSpring.testApp.contollers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.newSpring.testApp.ResponseEntinty.ResponseWrapper;
@@ -37,6 +38,7 @@ public class BooksControllers {
     private BookRepo booksRepo;
 
     @GetMapping("v1/getBooks")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ResponseWrapper> getBooks() {
         ResponseWrapper responseWrapper = new ResponseWrapper();
         StatusDescription statusDescription = new StatusDescription();
@@ -53,6 +55,7 @@ public class BooksControllers {
     }
 
     @PostMapping("v1/addBook")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ResponseWrapper> addBook(@RequestBody CreateBook createBook) {
         ResponseWrapper responseWrapper1 = new ResponseWrapper();
         StatusDescription statusDescription1 = new StatusDescription();

@@ -6,17 +6,20 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.newSpring.testApp.dto.BookDto;
 import com.newSpring.testApp.modal.BookModal;
 import com.newSpring.testApp.modal.UserModal;
 
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class ResponseWrapper implements Serializable {
 
     StatusDescription statusDescriptions;
@@ -29,9 +32,6 @@ public class ResponseWrapper implements Serializable {
 
     Page<BookModal> booksPage;
 
-    @Override
-    public String toString() {
-        return "ResponseWrapper [statusDescriptions=" + statusDescriptions + ", users=" + users + ", books=" + books
-                + "]";
-    }
+    List<BookDto> booksDto;
+
 }

@@ -37,6 +37,7 @@ import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.newSpring.testApp.modal.repo.BookRepo;
 import com.newSpring.testApp.ResponseEntinty.StatusDescription;
+import com.newSpring.testApp.dto.BookDto;
 import com.newSpring.testApp.modal.BookModal;
 import com.newSpring.testApp.modal.UserModal;
 import com.newSpring.testApp.modal.repo.UsersRepo;
@@ -394,4 +395,31 @@ public class BooksServiceImpl implements BooksService {
             this.paramValue = paramValue;
         }
     }
+
+    @Override
+    public ResponseWrapper getBooksDto() {
+        StatusDescription statusDescription = new StatusDescription();
+        ResponseWrapper responseWrapper = new ResponseWrapper();
+
+        try {
+            List<BookDto> booksDto = booksRepo.findAllBooks();
+            responseWrapper.setBooksDto(booksDto);
+            if (booksDto.isEmpty()) {
+                statusDescription.setStatusCode(220);
+                statusDescription.setStatusDescription("No books found");
+                return responseWrapper;
+            }
+            responseWrapper.setBooksDto(booksDto);
+            statusDescription.setStatusCode(200);
+            statusDescription.setStatusDescription("Books fetched successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            statusDescription.setStatusCode(500);
+            statusDescription.setStatusDescription("Internal Server Error: " + e.getMessage());
+        }
+        responseWrapper.setStatusDescriptions(statusDescription);
+
+        return responseWrapper;
+    }
+
 }

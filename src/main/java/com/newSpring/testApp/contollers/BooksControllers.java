@@ -140,4 +140,47 @@ public class BooksControllers {
         return new ResponseEntity<>(responseWrapper, HttpStatus.OK);
     }
 
+    @GetMapping("v1/getBooksDto")
+    public ResponseEntity<ResponseWrapper> getBooksDto() {
+        ResponseWrapper responseWrapper = new ResponseWrapper();
+        StatusDescription statusDescription = new StatusDescription();
+
+        responseWrapper.setStatusDescriptions(statusDescription);
+
+        try {
+
+            responseWrapper = this.booksService.getBooksDto();
+            statusDescription = responseWrapper.getStatusDescriptions();
+            responseWrapper.setStatusDescriptions(statusDescription);
+        } catch (Exception e) {
+            e.printStackTrace();
+            statusDescription.setStatusCode(500);
+            statusDescription.setStatusDescription("Internal Server Error: " + e.getMessage());
+            responseWrapper.setStatusDescriptions(statusDescription);
+        }
+
+        return new ResponseEntity<>(responseWrapper, HttpStatus.OK);
+    }
+
+    @PostMapping("v1/addBookFile")
+    public ResponseEntity<ResponseWrapper> addBookFile(@RequestParam("file") MultipartFile file,
+            @RequestParam("bookId") Long bookId) {
+        ResponseWrapper responseWrapper = new ResponseWrapper();
+        StatusDescription statusDescription = new StatusDescription();
+
+        responseWrapper.setStatusDescriptions(statusDescription);
+
+        try {
+            responseWrapper = this.booksService.addBookFile(file, bookId).get();
+            statusDescription = responseWrapper.getStatusDescriptions();
+            responseWrapper.setStatusDescriptions(statusDescription);
+        } catch (Exception e) {
+            e.printStackTrace();
+            statusDescription.setStatusCode(500);
+            statusDescription.setStatusDescription("Internal Server Error: " + e.getMessage());
+            responseWrapper.setStatusDescriptions(statusDescription);
+        }
+
+        return new ResponseEntity<>(responseWrapper, HttpStatus.OK);
+    }
 }

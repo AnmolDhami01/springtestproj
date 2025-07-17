@@ -21,5 +21,7 @@ public interface BooksService {
 
     ResponseWrapper filterBooks(FilterBooksRequest filterBooksRequest);
 
+    ResponseWrapper getBooksDto();
+
     byte[] getBookFile(Long bookId);
 }

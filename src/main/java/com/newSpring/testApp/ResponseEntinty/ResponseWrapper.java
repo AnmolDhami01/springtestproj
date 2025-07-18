@@ -12,14 +12,14 @@ import com.newSpring.testApp.modal.UserModal;
 
 import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@Builder
 public class ResponseWrapper implements Serializable {
 
     StatusDescription statusDescriptions;

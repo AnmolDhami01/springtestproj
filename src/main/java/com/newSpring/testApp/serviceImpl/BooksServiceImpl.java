@@ -37,6 +37,7 @@ import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.newSpring.testApp.modal.repo.BookRepo;
 import com.newSpring.testApp.ResponseEntinty.StatusDescription;
+import com.newSpring.testApp.constant.ConstantManager;
 import com.newSpring.testApp.dto.BookDto;
 import com.newSpring.testApp.modal.BookModal;
 import com.newSpring.testApp.modal.UserModal;
@@ -58,6 +59,9 @@ public class BooksServiceImpl implements BooksService {
 
     @Autowired
     private EntityManager entityManager;
+
+    @Autowired
+    private ConstantManager constantManager;
 
     @Override
     public ResponseWrapper addBook(CreateBook createBook) {
@@ -400,24 +404,25 @@ public class BooksServiceImpl implements BooksService {
     public ResponseWrapper getBooksDto() {
         StatusDescription statusDescription = new StatusDescription();
         ResponseWrapper responseWrapper = new ResponseWrapper();
+        responseWrapper.setStatusDescriptions(statusDescription);
 
         try {
             List<BookDto> booksDto = booksRepo.findAllBooks();
             responseWrapper.setBooksDto(booksDto);
             if (booksDto.isEmpty()) {
-                statusDescription.setStatusCode(220);
-                statusDescription.setStatusDescription("No books found");
+                statusDescription.setStatusCode(ConstantManager.NoRecordStatus.getStatusCode());
+                statusDescription.setStatusDescription(ConstantManager.NoRecordStatus.getStatusDescription());
                 return responseWrapper;
             }
+            statusDescription.setStatusCode(ConstantManager.Success.getStatusCode());
+            statusDescription.setStatusDescription(ConstantManager.Success.getStatusDescription());
             responseWrapper.setBooksDto(booksDto);
-            statusDescription.setStatusCode(200);
-            statusDescription.setStatusDescription("Books fetched successfully");
+
         } catch (Exception e) {
             e.printStackTrace();
-            statusDescription.setStatusCode(500);
-            statusDescription.setStatusDescription("Internal Server Error: " + e.getMessage());
+            statusDescription.setStatusCode(ConstantManager.Error.getStatusCode());
+            statusDescription.setStatusDescription(ConstantManager.Error.getStatusDescription());
         }
-        responseWrapper.setStatusDescriptions(statusDescription);
 
         return responseWrapper;
     }

@@ -1,4 +1,4 @@
-package com.newSpring.testApp.contollers;
+package com.newSpring.testApp.controllers;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.newSpring.testApp.RequestEntity.CreateBook;
 import com.newSpring.testApp.ResponseEntinty.ResponseWrapper;
 import com.newSpring.testApp.ResponseEntinty.StatusDescription;
 import com.newSpring.testApp.modal.UserModal;
@@ -16,8 +15,6 @@ import com.newSpring.testApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @RestController
 @RequestMapping("users/")
@@ -53,10 +50,9 @@ public class UsersControllers {
             statusDescription1.setStatusCode(500);
             statusDescription1.setStatusDescription("Internal Server Error");
             responseWrapper1.setStatusDescriptions(statusDescription1);
-        } finally {
-            return new ResponseEntity<>(responseWrapper1, HttpStatus.OK);
-
         }
+
+        return new ResponseEntity<>(responseWrapper1, HttpStatus.OK);
 
     }
 

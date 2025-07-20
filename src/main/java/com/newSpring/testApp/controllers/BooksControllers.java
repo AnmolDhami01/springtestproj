@@ -1,4 +1,4 @@
-package com.newSpring.testApp.contollers;
+package com.newSpring.testApp.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,7 +11,6 @@ import com.newSpring.testApp.modal.repo.BookRepo;
 import com.newSpring.testApp.RequestEntity.CreateBook;
 import com.newSpring.testApp.RequestEntity.FilterBooksRequest;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("books/")
@@ -70,9 +66,9 @@ public class BooksControllers {
             statusDescription1.setStatusCode(500);
             statusDescription1.setStatusDescription("Internal Server Error");
             responseWrapper1.setStatusDescriptions(statusDescription1);
-        } finally {
-            return new ResponseEntity<>(responseWrapper1, HttpStatus.OK);
         }
+
+        return new ResponseEntity<>(responseWrapper1, HttpStatus.OK);
 
     }
 

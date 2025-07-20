@@ -10,6 +10,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.ConcurrentModificationException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -38,6 +40,20 @@ public class GlobalExceptionHandler {
         responseWrapper.setStatusDescriptions(statusDescription);
 
         return new ResponseEntity<>(responseWrapper, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(ConcurrentModificationException.class)
+    public ResponseEntity<ResponseWrapper> handleConcurrentModificationException(ConcurrentModificationException ex) {
+        ResponseWrapper responseWrapper = new ResponseWrapper();
+        StatusDescription statusDescription = new StatusDescription();
+
+        statusDescription.setStatusCode(500);
+        statusDescription
+                .setStatusDescription("Internal Server Error: JSON serialization failed due to circular references");
+
+        responseWrapper.setStatusDescriptions(statusDescription);
+
+        return new ResponseEntity<>(responseWrapper, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(AuthenticationException.class)

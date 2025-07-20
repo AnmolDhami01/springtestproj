@@ -45,7 +45,7 @@ public class JwtUtil {
         try {
             final Claims claims = extractAllClaims(token);
             return claimsResolver.apply(claims);
-        } catch (SignatureException e) {
+        } catch (@SuppressWarnings("deprecation") SignatureException e) {
             request.setAttribute("statusCode", "15");
             request.setAttribute("statusMessage", "Invalid Jwt Signature");
         } catch (MalformedJwtException e) {

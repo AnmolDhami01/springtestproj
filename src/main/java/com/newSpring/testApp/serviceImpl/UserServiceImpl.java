@@ -1,13 +1,15 @@
 package com.newSpring.testApp.serviceImpl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.newSpring.testApp.RequestEntity.CreateBook;
 import com.newSpring.testApp.ResponseEntinty.ResponseWrapper;
 import com.newSpring.testApp.ResponseEntinty.StatusDescription;
+import com.newSpring.testApp.config.RestTemplateConfig;
 import com.newSpring.testApp.modal.UserModal;
 import com.newSpring.testApp.modal.repo.UsersRepo;
 import com.newSpring.testApp.modal.repo.BookRepo;
@@ -20,6 +22,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BookRepo booksRepo;
+
+    @Autowired
+    private RestTemplateConfig restTemplateConfig;
 
     @Override
     public ResponseWrapper getUsers() {
@@ -62,6 +67,34 @@ public class UserServiceImpl implements UserService {
             responseWrapper.setStatusDescriptions(statusDescription);
             return responseWrapper;
         }
+    }
+
+    @Override
+    public ResponseWrapper getPlaceholderUsers() {
+        StatusDescription statusDescription = new StatusDescription();
+        ResponseWrapper responseWrapper = new ResponseWrapper();
+        responseWrapper.setStatusDescriptions(statusDescription);
+        try {
+
+            String url = "https://jsonplaceholder.typicode.com/users";
+            ResponseEntity<Object[]> response = restTemplateConfig.restTemplate().getForEntity(url, Object[].class);
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                statusDescription.setStatusCode(200);
+                statusDescription.setStatusDescription("Success");
+                Object[] users = response.getBody();
+                List<Object> usersList = Arrays.asList(users);
+                responseWrapper.setPlaceholderUsers(usersList);
+            } else {
+                statusDescription.setStatusCode(500);
+                statusDescription.setStatusDescription("Internal Server Error");
+            }
+
+        } catch (Exception e) {
+            statusDescription.setStatusCode(500);
+            statusDescription.setStatusDescription("Internal Server Error");
+        }
+
+        return responseWrapper;
     }
 
 }

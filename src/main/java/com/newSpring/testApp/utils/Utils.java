@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
 
@@ -30,6 +31,7 @@ public class Utils {
     private BulkErrorRepo bulkErrorRepo;
 
     private final String BASE_UPLOAD_DIR = "uploads";
+    private final String BASE_GENERATE_DIR = "generate";
 
     @Async("taskExecutor")
     public void addBookBulkCsv(MultipartFile file) {
@@ -158,6 +160,37 @@ public class Utils {
 
             // Save the file
             file.transferTo(new File(filePath));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Async("taskExecutor")
+    public void generateCsvByUserId(Long userId, List<BookModal> books) {
+        try {
+
+            if (books.isEmpty()) {
+                return;
+            }
+
+            String csvFilePath = Paths.get(BASE_GENERATE_DIR, userId.toString(), userId.toString() + ".csv").toString();
+            File csvFile = new File(csvFilePath);
+
+            // Ensure parent directories exist
+            File parentDir = csvFile.getParentFile();
+            if (!parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+
+            String csvContent = "Book Name,Price\n";
+            for (BookModal book : books) {
+                csvContent += book.getName() + "," + book.getPrice() + "\n";
+            }
+
+            FileWriter fileWriter = new FileWriter(csvFile);
+            fileWriter.write(csvContent);
+            fileWriter.close();
 
         } catch (Exception e) {
             e.printStackTrace();

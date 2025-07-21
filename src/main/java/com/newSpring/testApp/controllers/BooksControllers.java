@@ -182,4 +182,22 @@ public class BooksControllers {
 
         return new ResponseEntity<>(responseWrapper, HttpStatus.OK);
     }
+
+    @GetMapping("v1/generateCsvByUserId")
+    public ResponseEntity<ResponseWrapper> generateCsvByUserId(@RequestParam("userId") Long userId) {
+        ResponseWrapper responseWrapper = new ResponseWrapper();
+        StatusDescription statusDescription = new StatusDescription();
+
+        responseWrapper.setStatusDescriptions(statusDescription);
+
+        try {
+            responseWrapper = this.booksService.generateCsvByUserId(userId).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            statusDescription.setStatusCode(500);
+            statusDescription.setStatusDescription("Internal Server Error: " + e.getMessage());
+        }
+
+        return new ResponseEntity<>(responseWrapper, HttpStatus.OK);
+    }
 }

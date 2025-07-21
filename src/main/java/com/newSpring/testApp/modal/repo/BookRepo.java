@@ -16,4 +16,6 @@ public interface BookRepo extends JpaRepository<BookModal, Long> {
     @NativeQuery("SELECT name,id FROM books")
     List<BookDto> findAllBooks();
 
+    List<BookModal> findByAuthorId(Long userId);
+
 }

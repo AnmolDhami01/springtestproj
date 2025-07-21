@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.newSpring.testApp.ResponseEntinty.ResponseWrapper;
 import com.newSpring.testApp.ResponseEntinty.StatusDescription;
+import com.newSpring.testApp.constant.ConstantManager;
 import com.newSpring.testApp.modal.UserModal;
 import com.newSpring.testApp.service.UserService;
 
@@ -23,6 +24,9 @@ public class UsersControllers {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ConstantManager constantManager;
 
     @GetMapping("v1/getUsers")
     public ResponseEntity<ResponseWrapper> getUsers() {
@@ -53,6 +57,24 @@ public class UsersControllers {
         }
 
         return new ResponseEntity<>(responseWrapper1, HttpStatus.OK);
+
+    }
+
+    @GetMapping("v1/getPlaceholderUsers")
+    public ResponseEntity<ResponseWrapper> getPlaceholderUsers() {
+        ResponseWrapper responseWrapper = new ResponseWrapper();
+        StatusDescription statusDescription = new StatusDescription();
+
+        responseWrapper.setStatusDescriptions(statusDescription);
+
+        try {
+            responseWrapper = this.userService.getPlaceholderUsers();
+        } catch (Exception e) {
+            statusDescription.setStatusCode(constantManager.Error.getStatusCode());
+            statusDescription.setStatusDescription(constantManager.Error.getStatusDescription());
+        }
+
+        return new ResponseEntity<>(responseWrapper, HttpStatus.OK);
 
     }
 

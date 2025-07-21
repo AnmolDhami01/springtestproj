@@ -34,4 +34,6 @@ public class ResponseWrapper implements Serializable {
 
     List<BookDto> booksDto;
 
+    List<Object> placeholderUsers;
+
 }

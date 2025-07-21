@@ -24,4 +24,6 @@ public interface BooksService {
     ResponseWrapper getBooksDto();
 
     byte[] getBookFile(Long bookId);
+
+    CompletableFuture<ResponseWrapper> generateCsvByUserId(Long userId);
 }

@@ -427,4 +427,46 @@ public class BooksServiceImpl implements BooksService {
         return responseWrapper;
     }
 
+    @Override
+    public CompletableFuture<ResponseWrapper> generateCsvByUserId(Long userId) {
+        StatusDescription statusDescription = new StatusDescription();
+        ResponseWrapper responseWrapper = new ResponseWrapper();
+        responseWrapper.setStatusDescriptions(statusDescription);
+
+        try {
+
+            if (userId == null || userId == 0) {
+                statusDescription.setStatusCode(ConstantManager.BadRequest.getStatusCode());
+                statusDescription.setStatusDescription(ConstantManager.BadRequest.getStatusDescription());
+                return CompletableFuture.completedFuture(responseWrapper);
+            }
+
+            UserModal user = usersRepo.findById(userId);
+            if (user == null) {
+                statusDescription.setStatusCode(ConstantManager.NoRecordStatus.getStatusCode());
+                statusDescription.setStatusDescription(ConstantManager.NoRecordStatus.getStatusDescription());
+                return CompletableFuture.completedFuture(responseWrapper);
+            }
+
+            List<BookModal> books = booksRepo.findByAuthorId(userId);
+            if (books.isEmpty()) {
+                statusDescription.setStatusCode(ConstantManager.NoRecordStatus.getStatusCode());
+                statusDescription.setStatusDescription(ConstantManager.NoRecordStatus.getStatusDescription());
+                return CompletableFuture.completedFuture(responseWrapper);
+            }
+
+            statusDescription.setStatusCode(ConstantManager.Success.getStatusCode());
+            statusDescription.setStatusDescription(ConstantManager.Success.getStatusDescription());
+
+            utils.generateCsvByUserId(userId, books);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            statusDescription.setStatusCode(ConstantManager.Error.getStatusCode());
+            statusDescription.setStatusDescription(ConstantManager.Error.getStatusDescription());
+        }
+
+        return CompletableFuture.completedFuture(responseWrapper);
+
+    }
 }

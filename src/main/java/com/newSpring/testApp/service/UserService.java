@@ -11,4 +11,6 @@ public interface UserService {
 
     ResponseWrapper addUser(UserModal userModal);
 
+    ResponseWrapper getPlaceholderUsers();
+
 }

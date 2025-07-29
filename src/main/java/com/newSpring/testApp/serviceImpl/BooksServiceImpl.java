@@ -39,6 +39,7 @@ import com.newSpring.testApp.modal.repo.BookRepo;
 import com.newSpring.testApp.ResponseEntinty.StatusDescription;
 import com.newSpring.testApp.constant.ConstantManager;
 import com.newSpring.testApp.dto.BookDto;
+import com.newSpring.testApp.exception.AppException;
 import com.newSpring.testApp.modal.BookModal;
 import com.newSpring.testApp.modal.UserModal;
 import com.newSpring.testApp.modal.repo.UsersRepo;
@@ -401,30 +402,24 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
-    public ResponseWrapper getBooksDto() {
-        StatusDescription statusDescription = new StatusDescription();
-        ResponseWrapper responseWrapper = new ResponseWrapper();
-        responseWrapper.setStatusDescriptions(statusDescription);
+    public ResponseWrapper<?> getBooksDto() {
 
         try {
             List<BookDto> booksDto = booksRepo.findAllBooks();
-            responseWrapper.setBooksDto(booksDto);
             if (booksDto.isEmpty()) {
-                statusDescription.setStatusCode(ConstantManager.NoRecordStatus.getStatusCode());
-                statusDescription.setStatusDescription(ConstantManager.NoRecordStatus.getStatusDescription());
-                return responseWrapper;
+                throw new AppException(ConstantManager.NoRecordStatus.getStatusCode(),
+                        ConstantManager.NoRecordStatus.getStatusDescription());
             }
-            statusDescription.setStatusCode(ConstantManager.Success.getStatusCode());
-            statusDescription.setStatusDescription(ConstantManager.Success.getStatusDescription());
-            responseWrapper.setBooksDto(booksDto);
+            return ResponseWrapper.builder().statusDescriptions(ConstantManager.SUCCESS).booksDto(booksDto).build();
 
+        } catch (AppException e) {
+            throw e;
         } catch (Exception e) {
             e.printStackTrace();
-            statusDescription.setStatusCode(ConstantManager.Error.getStatusCode());
-            statusDescription.setStatusDescription(ConstantManager.Error.getStatusDescription());
+            throw new AppException(ConstantManager.Error.getStatusCode(),
+                    ConstantManager.Error.getStatusDescription());
         }
 
-        return responseWrapper;
     }
 
     @Override
@@ -455,8 +450,8 @@ public class BooksServiceImpl implements BooksService {
                 return CompletableFuture.completedFuture(responseWrapper);
             }
 
-            statusDescription.setStatusCode(ConstantManager.Success.getStatusCode());
-            statusDescription.setStatusDescription(ConstantManager.Success.getStatusDescription());
+            statusDescription.setStatusCode(ConstantManager.SUCCESS.getStatusCode());
+            statusDescription.setStatusDescription(ConstantManager.SUCCESS.getStatusDescription());
 
             utils.generateCsvByUserId(userId, books);
 

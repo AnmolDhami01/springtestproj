@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.newSpring.testApp.ResponseEntinty.ResponseWrapper;
 import com.newSpring.testApp.ResponseEntinty.StatusDescription;
+import com.newSpring.testApp.dto.BookDto;
 import com.newSpring.testApp.modal.BookModal;
 import com.newSpring.testApp.modal.repo.BookRepo;
 import com.newSpring.testApp.RequestEntity.CreateBook;
@@ -47,7 +48,7 @@ public class BooksControllers {
 
         responseWrapper.setStatusDescriptions(statusDescription);
 
-        return new ResponseEntity<>(responseWrapper, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(responseWrapper);
     }
 
     @PostMapping("v1/addBook")
@@ -140,25 +141,8 @@ public class BooksControllers {
     }
 
     @GetMapping("v1/getBooksDto")
-    public ResponseEntity<ResponseWrapper> getBooksDto() {
-        ResponseWrapper responseWrapper = new ResponseWrapper();
-        StatusDescription statusDescription = new StatusDescription();
-
-        responseWrapper.setStatusDescriptions(statusDescription);
-
-        try {
-
-            responseWrapper = this.booksService.getBooksDto();
-            statusDescription = responseWrapper.getStatusDescriptions();
-            responseWrapper.setStatusDescriptions(statusDescription);
-        } catch (Exception e) {
-            e.printStackTrace();
-            statusDescription.setStatusCode(500);
-            statusDescription.setStatusDescription("Internal Server Error: " + e.getMessage());
-            responseWrapper.setStatusDescriptions(statusDescription);
-        }
-
-        return new ResponseEntity<>(responseWrapper, HttpStatus.OK);
+    public ResponseEntity<ResponseWrapper<?>> getBooksDto() {
+        return ResponseEntity.status(HttpStatus.OK).body(this.booksService.getBooksDto());
     }
 
     @PostMapping("v1/addBookFile")

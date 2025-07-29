@@ -4,95 +4,97 @@ import java.text.SimpleDateFormat;
 
 import org.springframework.stereotype.Component;
 
+import com.newSpring.testApp.ResponseEntinty.StatusDescription;
+
 @Component
 public class ConstantManager {
 
         SimpleDateFormat outputFormat = new SimpleDateFormat("MMM d, yyyy HH:mm:ss");
-        private Integer statusCode;
+        private int statusCode;
         private String statusDescription;
-        private String errorType;
 
-        public final static ConstantManager Success = new ConstantManager(200,
-                        "Success", "success");
-        public final static ConstantManager NoRecordStatus = new ConstantManager(210,
-                        "No Record found..!!", "warning");
-        public final static ConstantManager Error = new ConstantManager(500,
-                        "Something went wrong . Please try again after some time.", "danger");
-        public final static ConstantManager CountryIdNotFound = new ConstantManager(211,
-                        "CountryId not found.", "warning");
-        public final static ConstantManager BadRequest = new ConstantManager(400,
-                        "Bad Request", "warning");
+        public final static StatusDescription SUCCESS = StatusDescription.builder().statusCode(200)
+                        .statusDescription("Success")
+                        .build();
+        public final static StatusDescription NoRecordStatus = StatusDescription.builder().statusCode(210)
+                        .statusDescription("No Record found..!!").build();
+        public final static StatusDescription Error = StatusDescription.builder().statusCode(500)
+                        .statusDescription("Something went wrong . Please try again after some time.").build();
+        public final static StatusDescription CountryIdNotFound = StatusDescription.builder().statusCode(211)
+                        .statusDescription("CountryId not found.").build();
+        public final static StatusDescription BadRequest = StatusDescription.builder().statusCode(400)
+                        .statusDescription("Bad Request").build();
 
-        public final static ConstantManager StateIdNotFound = new ConstantManager(211,
-                        "StateId not found.", "warning");
-        public final static ConstantManager NotAllowed = new ConstantManager(212,
-                        "UserMaster object empty not allowed", "warning");
+        public final static StatusDescription StateIdNotFound = StatusDescription.builder().statusCode(211)
+                        .statusDescription("StateId not found.").build();
+        public final static StatusDescription NotAllowed = StatusDescription.builder().statusCode(212)
+                        .statusDescription("UserMaster object empty not allowed").build();
 
-        public final static ConstantManager userAlreadyExist = new ConstantManager(213,
-                        "User with same mobileno already exist", "warning");
-        public final static ConstantManager WrongFileFormat = new ConstantManager(214,
-                        "Wrong file format kindly upload .PNG or .JPG format only", "warning");
-        public final static ConstantManager InvalidRequest = new ConstantManager(215,
-                        "Invalid request body", "warning");
-        public final static ConstantManager InvalidFileSize = new ConstantManager(216,
-                        "File size exceeds the allowed limit", "warning");
-        public final static ConstantManager UserProfileNullNotAllowed = new ConstantManager(212,
-                        "UserProfileDetails null not allowed", "warning");
-        public final static ConstantManager UserMobileNoNullNotAllowed = new ConstantManager(212,
-                        "UserMobileNumber null not allowed", "warning");
-        public final static ConstantManager IncompleteRequest = new ConstantManager(212,
-                        "Incomplete request not allowed", "warning");
+        public final static StatusDescription userAlreadyExist = StatusDescription.builder().statusCode(213)
+                        .statusDescription("User with same mobile no already exist").build();
+        public final static StatusDescription WrongFileFormat = StatusDescription.builder().statusCode(214)
+                        .statusDescription("Wrong file format kindly upload .PNG or .JPG format only").build();
+        public final static StatusDescription InvalidRequest = StatusDescription.builder().statusCode(215)
+                        .statusDescription("Invalid request body").build();
+        public final static StatusDescription InvalidFileSize = StatusDescription.builder().statusCode(216)
+                        .statusDescription("File size exceeds the allowed limit").build();
+        public final static StatusDescription UserProfileNullNotAllowed = StatusDescription.builder().statusCode(212)
+                        .statusDescription("UserProfileDetails null not allowed").build();
+        public final static StatusDescription UserMobileNoNullNotAllowed = StatusDescription.builder().statusCode(212)
+                        .statusDescription("UserMobileNumber null not allowed").build();
+        public final static StatusDescription IncompleteRequest = StatusDescription.builder().statusCode(212)
+                        .statusDescription("Incomplete request not allowed").build();
 
-        public final static ConstantManager FileNotExist = new ConstantManager(217,
-                        "Filename not exist", "warning");
-        public final static ConstantManager UserNotFound = new ConstantManager(218,
-                        "User not found", "warning");
-        public final static ConstantManager InvalidDocumentId = new ConstantManager(219,
-                        "Document id not found", "warning");
-        public final static ConstantManager UserAlreadyActive = new ConstantManager(220,
-                        "User already active", "warning");
-        public final static ConstantManager UserAlreadyBlocked = new ConstantManager(221,
-                        "User already blocked", "warning");
-        public final static ConstantManager UserAlreadyInActive = new ConstantManager(222,
-                        "User already Inactive", "warning");
+        public final static StatusDescription FileNotExist = StatusDescription.builder().statusCode(217)
+                        .statusDescription("Filename not exist").build();
+        public final static StatusDescription UserNotFound = StatusDescription.builder().statusCode(218)
+                        .statusDescription("User not found").build();
+        public final static StatusDescription InvalidDocumentId = StatusDescription.builder().statusCode(219)
+                        .statusDescription("Document id not found").build();
+        public final static StatusDescription UserAlreadyActive = StatusDescription.builder().statusCode(220)
+                        .statusDescription("User already active").build();
+        public final static StatusDescription UserAlreadyBlocked = StatusDescription.builder().statusCode(221)
+                        .statusDescription("User already blocked").build();
+        public final static StatusDescription UserAlreadyInActive = StatusDescription.builder().statusCode(222)
+                        .statusDescription("User already Inactive").build();
 
-        public final static ConstantManager UserAlreadyUnblocked = new ConstantManager(223,
-                        "User already unblocked", "warning");
-        public final static ConstantManager OnboardingStatusNotSuccess = new ConstantManager(224,
-                        "User can't be active till onboarding status success", "warning");
-        public final static ConstantManager OnboardingStatusNotValidForBlock = new ConstantManager(225,
-                        "User can't be blocked if onboarding is not success", "warning");
-        public final static ConstantManager UserDocumentNotFound = new ConstantManager(226,
-                        "User document not found", "warning");
-        public final static ConstantManager clientNotFound = new ConstantManager(227,
-                        "Client not found", "warning");
-        public final static ConstantManager clientIdNullNotAllowed = new ConstantManager(228,
-                        "ClientId null not allowed", "warning");
-        public final static ConstantManager EmptyFilenameListNotAllowed = new ConstantManager(229,
-                        "Filename list empty in request", "warning");
-        public final static ConstantManager InvalidOnboardingStatus = new ConstantManager(230,
-                        "OnboardingStatusId not found", "warning");
-        public final static ConstantManager RequestBodyUserNotFound = new ConstantManager(231,
-                        "UserId not found in requestbody", "warning");
-        public final static ConstantManager BikerIdNullNoTAllowed = new ConstantManager(232,
-                        "If isEdit is true bikerId null not allowed", "warning");
+        public final static StatusDescription UserAlreadyUnblocked = StatusDescription.builder().statusCode(223)
+                        .statusDescription("User already unblocked").build();
+        public final static StatusDescription OnboardingStatusNotSuccess = StatusDescription.builder().statusCode(224)
+                        .statusDescription("User can't be active till onboarding status success").build();
+        public final static StatusDescription OnboardingStatusNotValidForBlock = StatusDescription.builder()
+                        .statusCode(225)
+                        .statusDescription("User can't be blocked if onboarding is not success").build();
+        public final static StatusDescription UserDocumentNotFound = StatusDescription.builder().statusCode(226)
+                        .statusDescription("User document not found").build();
+        public final static StatusDescription clientNotFound = StatusDescription.builder().statusCode(227)
+                        .statusDescription("Client not found").build();
+        public final static StatusDescription clientIdNullNotAllowed = StatusDescription.builder().statusCode(228)
+                        .statusDescription("ClientId null not allowed").build();
+        public final static StatusDescription EmptyFilenameListNotAllowed = StatusDescription.builder().statusCode(229)
+                        .statusDescription("Filename list empty in request").build();
+        public final static StatusDescription InvalidOnboardingStatus = StatusDescription.builder().statusCode(230)
+                        .statusDescription("OnboardingStatusId not found").build();
+        public final static StatusDescription RequestBodyUserNotFound = StatusDescription.builder().statusCode(231)
+                        .statusDescription("UserId not found in request body").build();
+        public final static StatusDescription BikerIdNullNoTAllowed = StatusDescription.builder().statusCode(232)
+                        .statusDescription("If isEdit is true bikerId null not allowed").build();
 
         public ConstantManager() {
 
         }
 
-        public ConstantManager(Integer statusCode, String statusDescription, String errorType) {
+        public ConstantManager(int statusCode, String statusDescription) {
                 super();
                 this.statusCode = statusCode;
                 this.statusDescription = statusDescription;
-                this.errorType = errorType;
         }
 
-        public Integer getStatusCode() {
+        public int getStatusCode() {
                 return statusCode;
         }
 
-        public void setStatusCode(Integer statusCode) {
+        public void setStatusCode(int statusCode) {
                 this.statusCode = statusCode;
         }
 
@@ -102,14 +104,6 @@ public class ConstantManager {
 
         public void setStatusDescription(String statusDescription) {
                 this.statusDescription = statusDescription;
-        }
-
-        public String getErrorType() {
-                return errorType;
-        }
-
-        public void setErrorType(String errorType) {
-                this.errorType = errorType;
         }
 
 }

@@ -1,6 +1,5 @@
 package com.newSpring.testApp.ResponseEntinty;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -20,7 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ResponseWrapper implements Serializable {
+public class ResponseWrapper<T> {
 
     StatusDescription statusDescriptions;
 
@@ -35,5 +34,10 @@ public class ResponseWrapper implements Serializable {
     List<BookDto> booksDto;
 
     List<Object> placeholderUsers;
+
+    public ResponseWrapper(StatusDescription statusDescriptions) {
+        super();
+        this.statusDescriptions = statusDescriptions;
+    }
 
 }

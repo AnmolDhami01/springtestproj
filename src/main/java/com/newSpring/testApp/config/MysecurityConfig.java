@@ -32,6 +32,7 @@ public class MysecurityConfig {
                                                 .requestMatchers("/token").permitAll()
                                                 .requestMatchers("/auth/v1/**").permitAll()
                                                 .requestMatchers("/static/**").permitAll()
+                                                .requestMatchers("/users/v1/**").permitAll()
                                                 .requestMatchers("/static/uploads/**").permitAll()
                                                 .anyRequest().authenticated())
                                 .sessionManagement(session -> session

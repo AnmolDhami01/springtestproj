@@ -12,6 +12,8 @@ import com.newSpring.testApp.modal.repo.BookRepo;
 import com.newSpring.testApp.RequestEntity.CreateBook;
 import com.newSpring.testApp.RequestEntity.FilterBooksRequest;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,7 @@ public class BooksControllers {
 
     @PostMapping("v1/addBook")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ResponseWrapper> addBook(@RequestBody CreateBook createBook) {
+    public ResponseEntity<ResponseWrapper> addBook(@Valid @RequestBody CreateBook createBook) {
         ResponseWrapper responseWrapper1 = new ResponseWrapper();
         StatusDescription statusDescription1 = new StatusDescription();
 

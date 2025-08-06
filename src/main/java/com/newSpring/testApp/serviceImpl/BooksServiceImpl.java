@@ -65,17 +65,10 @@ public class BooksServiceImpl implements BooksService {
     private ConstantManager constantManager;
 
     @Override
-    public ResponseWrapper addBook(CreateBook createBook) {
+    public ResponseWrapper<?> addBook(CreateBook createBook) {
         StatusDescription statusDescription = new StatusDescription();
-        ResponseWrapper responseWrapper = new ResponseWrapper();
+        ResponseWrapper<?> responseWrapper = new ResponseWrapper<>();
         try {
-            if (createBook.getUserId() == null || createBook.getBook() == null || createBook.getBook().getName() == null
-                    || createBook.getBook().getPrice() == null) {
-                statusDescription.setStatusCode(400);
-                statusDescription.setStatusDescription("Invalid request");
-                responseWrapper.setStatusDescriptions(statusDescription);
-                return responseWrapper;
-            }
 
             UserModal findUser = usersRepo.findById(createBook.getUserId());
 
@@ -86,7 +79,7 @@ public class BooksServiceImpl implements BooksService {
                 return responseWrapper;
             }
 
-            BookModal findBook = booksRepo.findByName(createBook.getBook().getName());
+            BookModal findBook = booksRepo.findByName(createBook.getName());
 
             if (findBook != null) {
                 statusDescription.setStatusCode(409);
@@ -95,9 +88,12 @@ public class BooksServiceImpl implements BooksService {
                 return responseWrapper;
             }
 
-            createBook.getBook().setAuthor(findUser);
+            BookModal book = new BookModal();
+            book.setName(createBook.getName());
+            book.setPrice(createBook.getPrice());
+            book.setAuthor(findUser);
 
-            booksRepo.save(createBook.getBook());
+            booksRepo.save(book);
             statusDescription.setStatusCode(200);
             statusDescription.setStatusDescription("Book added successfully");
             responseWrapper.setStatusDescriptions(statusDescription);
@@ -107,9 +103,8 @@ public class BooksServiceImpl implements BooksService {
             statusDescription.setStatusCode(500);
             statusDescription.setStatusDescription("Internal Server Error");
             responseWrapper.setStatusDescriptions(statusDescription);
-        } finally {
-            return responseWrapper;
         }
+        return responseWrapper;
     }
 
     @Override
@@ -134,8 +129,8 @@ public class BooksServiceImpl implements BooksService {
                 String errorPrefix = "Book " + (i + 1) + ": ";
 
                 // Validate required fields
-                if (bookRequest.getUserId() == null || bookRequest.getBook() == null ||
-                        bookRequest.getBook().getName() == null || bookRequest.getBook().getPrice() == null) {
+                if (bookRequest.getUserId() == null || bookRequest.getName() == null
+                        || bookRequest.getPrice() == null) {
                     errors.add(errorPrefix + "Missing required fields (userId, book name, or price)");
                     continue;
                 }
@@ -148,15 +143,18 @@ public class BooksServiceImpl implements BooksService {
                 }
 
                 // Check if book already exists
-                BookModal findBook = booksRepo.findByName(bookRequest.getBook().getName());
+                BookModal findBook = booksRepo.findByName(bookRequest.getName());
                 if (findBook != null) {
-                    errors.add(errorPrefix + "Book with name '" + bookRequest.getBook().getName() + "' already exists");
+                    errors.add(errorPrefix + "Book with name '" + bookRequest.getName() + "' already exists");
                     continue;
                 }
 
                 // Set the author and add to valid books list
-                bookRequest.getBook().setAuthor(findUser);
-                validBooks.add(bookRequest.getBook());
+                BookModal book = new BookModal();
+                book.setName(bookRequest.getName());
+                book.setPrice(bookRequest.getPrice());
+                book.setAuthor(findUser);
+                validBooks.add(book);
             }
 
             // Save all valid books

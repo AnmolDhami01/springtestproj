@@ -1,5 +1,10 @@
 package com.newSpring.testApp.RequestEntity;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+
+import java.util.List;
+
 import com.newSpring.testApp.modal.BookModal;
 
 import lombok.AllArgsConstructor;
@@ -10,6 +15,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateBook {
+    @NotNull(message = "userId is required")
     private Long userId;
-    private BookModal book;
+    @NotNull(message = "name is required")
+    private String name;
+    @NotNull(message = "price is required")
+    private Long price;
+    private List<String> tags;
 }

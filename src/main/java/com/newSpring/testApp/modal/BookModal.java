@@ -7,7 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,6 +19,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,12 +41,14 @@ public class BookModal {
     @Column(name = "id")
     private Long id;
     @Column(name = "name")
+    @NotNull(message = "Book name is required")
     private String name;
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id", nullable = false)
     @JsonBackReference
     private UserModal author;
     @Column(name = "price")
+    @NotNull(message = "Book price is required")
     private Long price;
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -59,7 +62,7 @@ public class BookModal {
     private String filePath;
     @ManyToMany
     @JoinTable(name = "book_tag_mapping", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    @JsonManagedReference
+    @JsonIgnore
     private List<TagModal> tags;
 
 }

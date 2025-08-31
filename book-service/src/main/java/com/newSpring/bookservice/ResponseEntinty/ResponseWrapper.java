@@ -1,0 +1,43 @@
+package com.newSpring.bookservice.ResponseEntinty;
+
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.newSpring.bookservice.dto.BookDto;
+import com.newSpring.bookservice.modal.BookModal;
+import com.newSpring.bookservice.modal.UserModal;
+
+import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class ResponseWrapper<T> {
+
+    StatusDescription statusDescriptions;
+
+    List<UserModal> users;
+
+    UserModal user;
+
+    List<BookModal> books;
+
+    Page<BookModal> booksPage;
+
+    List<BookDto> booksDto;
+
+    List<Object> placeholderUsers;
+
+    public ResponseWrapper(StatusDescription statusDescriptions) {
+        super();
+        this.statusDescriptions = statusDescriptions;
+    }
+
+}

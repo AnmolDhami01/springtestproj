@@ -1,23 +1,17 @@
-# Spring Cloud Microservices with API Gateway
+# Spring Cloud Microservices with Eureka-Gateway
 
-This project consists of three microservices:
+This project consists of two microservices:
 
-1. **Eureka Server** (Port 8761) - Service discovery and registration
-2. **API Gateway** (Port 8080) - Routes requests to appropriate microservices
-3. **Book Service** (Port 8081) - Handles business logic for books, users, and authentication
+1. **Eureka-Gateway** (Port 8761) - Combined Eureka Server + API Gateway
+2. **Book Service** (Port 8081) - Handles business logic for books, users, and authentication
 
 ## Project Structure
 
 ```
-├── eureka-server/                    # Eureka Server (Port 8761)
-│   ├── src/main/java/com/newSpring/eurekaserver/
-│   │   └── EurekaServerApplication.java
-│   └── src/main/resources/
-│       └── application.properties
-├── src/                              # API Gateway Service (Port 8080)
+├── src/                              # Eureka-Gateway Service (Port 8761)
 │   ├── main/java/com/newSpring/testApp/
-│   │   ├── config/                   # Gateway routing configuration only
-│   │   └── TestAppApplication.java
+│   │   ├── config/                   # Gateway routing configuration
+│   │   └── TestAppApplication.java   # Main app with @EnableEurekaServer
 │   └── main/resources/
 │       └── application.properties
 ├── book-service/                     # Book Service Microservice (Port 8081)
@@ -30,7 +24,7 @@ This project consists of three microservices:
 │   │   └── BookServiceApplication.java
 │   └── src/main/resources/
 │       └── application.properties
-└── pom.xml                           # Gateway dependencies only
+└── pom.xml                           # Eureka-Gateway dependencies
 ```
 
 ## Prerequisites
@@ -41,58 +35,39 @@ This project consists of three microservices:
 
 ## Running the Services
 
-### Option 1: With Eureka Server (Recommended for Production)
-
-#### 1. Start Eureka Server
+### 1. Start Eureka-Gateway (Combined Service)
 
 ```bash
-cd eureka-server
 mvnw spring-boot:run
 ```
 
-The Eureka server will start on port 8761. Visit `http://localhost:8761` to see the dashboard.
+The combined service will start on port 8761 and provide:
 
-#### 2. Start Book Service
+- **Eureka Dashboard**: `http://localhost:8761`
+- **API Gateway**: Routes requests to microservices
+
+### 2. Start Book Service
 
 ```bash
 cd book-service
 mvnw spring-boot:run
 ```
 
-The service will start on port 8081 and register with Eureka.
-
-#### 3. Start API Gateway
-
-```bash
-mvnw spring-boot:run
-```
-
-The gateway will start on port 8080 and register with Eureka.
-
-### Option 2: Without Eureka (Simpler for Development)
-
-If you don't want to run Eureka server, you can disable it:
-
-1. **Edit** `src/main/resources/application.properties`
-2. **Uncomment** this line: `# eureka.client.enabled=false`
-3. **Comment out** the Eureka client configuration
-
-Then start only the Book Service and API Gateway.
+The service will start on port 8081 and register with Eureka-Gateway.
 
 ## API Endpoints
 
-All requests go through the API Gateway at `http://localhost:8080`:
+All requests go through the Eureka-Gateway at `http://localhost:8761`:
 
-- **Books API**: `http://localhost:8080/api/books/**`
-- **Users API**: `http://localhost:8080/api/users/**`
-- **Auth API**: `http://localhost:8080/api/auth/**`
+- **Books API**: `http://localhost:8761/api/books/**`
+- **Users API**: `http://localhost:8761/api/users/**`
+- **Auth API**: `http://localhost:8761/api/auth/**`
 
 The gateway automatically routes these requests to the book-service microservice.
 
 ## Service Discovery
 
-- **Eureka Server**: `http://localhost:8761` (if running)
-- **API Gateway**: `http://localhost:8080`
+- **Eureka-Gateway**: `http://localhost:8761` (Dashboard + Gateway)
 - **Book Service**: `http://localhost:8081`
 
 ## Database Configuration
@@ -105,9 +80,8 @@ Update the database configuration in `book-service/src/main/resources/applicatio
 
 ## Notes
 
-- **Eureka Server** provides service discovery and registration
-- **API Gateway** is clean and minimal - only contains routing logic
+- **Eureka-Gateway** combines Eureka Server and API Gateway in one application
 - **Book Service** contains all business logic, security, and data access
 - The gateway handles routing, CORS, and load balancing
-- Both services register with Eureka for service discovery (if enabled)
-- No unnecessary business logic code in the gateway project
+- Book service registers with Eureka-Gateway for service discovery
+- Single application to manage instead of separate Eureka and Gateway

@@ -16,7 +16,7 @@
 	<artifactId>testApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>testApp</name>
-	<description>Demo project for Spring Boot with Eureka + Gateway</description>
+	<description>Demo project for Spring Boot with API Gateway</description>
 
 	<properties>
 		<java.version>17</java.version>
@@ -43,7 +43,6 @@
 			<version>1.18.30</version>
 			<scope>provided</scope>
 		</dependency>
-
 
 		<!-- Spring Cloud: Eureka Client -->
 		<dependency>

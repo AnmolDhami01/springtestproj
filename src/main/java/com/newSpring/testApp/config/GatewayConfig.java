@@ -8,24 +8,24 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GatewayConfig {
 
-    @Bean
-    public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
-        return builder.routes()
-                // Route to book-service for all /api/books/** requests
-                .route("book-service", r -> r
-                        .path("/api/books/**")
-                        .uri("lb://book-service"))
+        @Bean
+        public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+                return builder.routes()
+                                // Route to book-service for all /api/books/** requests
+                                .route("book-service", r -> r
+                                                .path("/api/books/**")
+                                                .uri("lb://book-service"))
 
-                // Route to book-service for all /api/users/** requests
-                .route("user-service", r -> r
-                        .path("/api/users/**")
-                        .uri("lb://book-service"))
+                                // Route to user-service for all /api/users/** requests
+                                .route("user-service", r -> r
+                                                .path("/api/users/**")
+                                                .uri("lb://user-service"))
 
-                // Route to book-service for all /api/auth/** requests
-                .route("auth-service", r -> r
-                        .path("/api/auth/**")
-                        .uri("lb://book-service"))
+                                // Route to auth-service for all /api/auth/** requests
+                                .route("auth-service", r -> r
+                                                .path("/api/auth/**")
+                                                .uri("lb://auth-service"))
 
-                .build();
-    }
+                                .build();
+        }
 }
